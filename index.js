@@ -1,11 +1,15 @@
 const express = require('express');
-const app=express();
+const taskRouter = require("./routes/tasks");
+const userRouter = require("./routes/user");
+const connectDB = require('./config/db');
 require('dotenv').config();
-const port = process.env.PORT;
+const app=express();
 
-app.get('/',(req,res)=>{
-    res.send('hello world');
-});
+const port = process.env.PORT;
+connectDB();
+
+app.use('/tasks', taskRouter);
+app.use('/user', userRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
