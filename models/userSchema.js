@@ -42,15 +42,6 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false, // Email verification flag
         },
-        resetPasswordToken: {
-            type: String,
-            default: null,
-        },
-        resetPasswordExpires: {
-            type: Date,
-            default: null,
-        },
-
         // App Features
         preferences: {
             notifications: {

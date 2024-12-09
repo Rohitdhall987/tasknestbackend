@@ -94,5 +94,39 @@ const loginUser = async (req, res) => {
     }
 };
 
+const updateUser = async (req, res) => {
+    const { id, preferences, avatar, theme, defaultColor } = req.body;
 
-module.exports = {createUser,loginUser};
+    if (!id) {
+        return res.status(400).send({ message: 'id is required' });
+    }
+
+    try {
+        // Find the user by ID
+        const user = await User.findOne({ id });
+        if (!user) {
+            return res.status(404).send({ message: 'User does not exist' });
+        }
+
+        // Update user fields
+        if (preferences.notifications) user.preferences.notifications = preferences.notifications;
+        if (avatar) user.avatar = avatar;
+        if (theme) user.theme = theme;
+        if (defaultColor) user.defaultColor = defaultColor;
+
+        // Save the updated user
+        await user.save();
+
+        // Exclude password from the response
+        const { password, ...userData } = user.toObject();
+
+        return res.json({ message: 'Update successful.', userData });
+    } catch (error) {
+        console.error('Error during update:', error);
+        return res.status(500).send({ message: 'Internal server error', error: error.message });
+    }
+};
+
+
+
+module.exports = {createUser,loginUser,updateUser};
