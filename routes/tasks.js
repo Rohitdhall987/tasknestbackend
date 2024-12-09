@@ -3,7 +3,7 @@ const {createTask, getTasks, getTaskById, updateTask, deleteTask}=require('../co
 
 const router=express.Router();
 
-router.get('/all/:filter', getTasks);
+router.get('/all', getTasks);
 
 router.post('/add', createTask)
 
