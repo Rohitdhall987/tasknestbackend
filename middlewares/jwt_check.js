@@ -9,7 +9,7 @@ const jwt_authenticate = (req, res, next) => {
 
     const token = authHeader.split(' ')[1];
     try {
-        jwt.verify(token, process.env.JWT_SECRET);
+        req.user = jwt.verify(token, process.env.JWT_SECRET);
         next();
     } catch (error) {
         return res.status(403).send({ message: 'Invalid or expired token.' });
